@@ -13,48 +13,77 @@ class Student:
 
 
 class Teacher:
-    def __init__(self, first_name, last_name, school_subject, school_classes, is_class_tutor=False,
-                 which_class_tutor=None):
+    def __init__(self, first_name, last_name, school_subject, school_classes, class_tutor_of=None):
         print(f"Utworzono profil nauczyciela! {first_name} {last_name} uczy przedmiotu {school_subject}.")
         print(f"Lista klas nauczyciela to: {school_classes}")
         self.first_name = first_name
         self.last_name = last_name
         self.school_subject = school_subject
         self.school_classes = school_classes
-        self.is_class_tutor = is_class_tutor
-        self.which_class_tutor = which_class_tutor
+        self.class_tutor_of = class_tutor_of
 
 
-students_objects = []
+# list_of_school_classes = []
+
+students_objects = [Student("Jan", "Kowalski", "1B"), Student("Marek", "Wójcik", "1B"), Student("Jan", "Kot", "2B")]
 teachers_objects = [Teacher("Paweł", "Kozioł", "biologia", ["1B", "2B", "3B"]), Teacher("Benek", "Ben", "geografia",
                                                                                         ["3B", "4B"])]
+list_of_school_classes = ["1B", "2B", "3B", "4B"]
 
+# data = {
+#     "Students":
+#     [
+#         {
+#             "first_name": "Paweł",
+#             "last_name": "Kozioł",
+#             "school_class": "1C"
+#         },
+#         {
+#             "first_name": "Ksawery",
+#             "last_name": "Kowalski",
+#             "school_class": "3C"
+#         }
+#     ],
+#     "Teachers":
+#     [
+#         {
+#             "first_name": "Jan",
+#             "last_name": "Wójtowicz",
+#             "school_subject": "biologia",
+#             "school_classes": ["1C", "2B", "2C"],
+#             "class_tutor_of": "1C"
+#         }
+#     ]
+# }
 
 while True:
     user_choice_main_menu = input("Wpisz jedną z poniższych opcji:\n"
-                                  "1. utwórz\n"
-                                  "2. zarządzaj\n"
-                                  "3. koniec\n")
+                                  "1 - utwórz\n"
+                                  "2 - zarządzaj\n"
+                                  "3 - koniec\n")
 
-    if user_choice_main_menu == "utwórz":
+    if user_choice_main_menu == "utwórz" or user_choice_main_menu == "1":
         while True:
             user_choice_create_menu = input("Wybierz typ profilu, który chcesz utworzyć:\n"
-                                            "1. uczeń\n"
-                                            "2. nauczyciel\n"
-                                            "3. wychowawca\n"
-                                            "4. koniec\n")
+                                            "1 - uczeń\n"
+                                            "2 - nauczyciel\n"
+                                            "3 - wychowawca\n"
+                                            "4 - koniec\n")
 
-            if user_choice_create_menu == "uczeń":
+            if user_choice_create_menu == "uczeń" or user_choice_create_menu == "1":
                 print("** Dodawanie profilu ucznia **")
                 first_name_from_user = input("Podaj imię: ")
                 last_name_from_user = input("Podaj nazwisko: ")
                 school_class_from_user = input("Podaj klasę: ")
 
                 students_objects.append(Student(first_name_from_user, last_name_from_user, school_class_from_user))
-                number_of_students = len(students_objects)
-                print(f"Łączna liczba uczniów to {number_of_students}.")
+                print(f"Łączna liczba uczniów to {len(students_objects)}.")
 
-            elif user_choice_create_menu == "nauczyciel":
+                # Dodanie klasy szkolnej do listy klas szkolnych
+                if students_objects[-1].school_class not in list_of_school_classes:
+                    list_of_school_classes.append(students_objects[-1].school_class)
+
+            elif user_choice_create_menu == "nauczyciel" or user_choice_create_menu == "2":
                 print("** Dodawanie profilu nauczyciela **")
                 first_name_from_user = input("Podaj imię: ")
                 last_name_from_user = input("Podaj nazwisko: ")
@@ -73,11 +102,15 @@ while True:
 
                 teachers_objects.append(Teacher(first_name_from_user, last_name_from_user, school_subject_from_user,
                                                 list_school_classes_from_user))
-                number_of_teachers = len(teachers_objects)
-                print(f"Łączna liczba nauczycieli to {number_of_teachers}.")
+                print(f"Łączna liczba nauczycieli to {len(teachers_objects)}.")
                 # print(f"Nauczyciele: {teachers_objects[0].first_name}")
 
-            elif user_choice_create_menu == "wychowawca":
+                # Dodanie klas szkolnych do listy klas szkolnych
+                for school_class in teachers_objects[-1].school_classes:
+                    if school_class not in list_of_school_classes:
+                        list_of_school_classes.append(school_class)
+
+            elif user_choice_create_menu == "wychowawca" or user_choice_create_menu == "3":
                 print("** Dodawanie profilu wychowawcy **")
                 print("Lista nauczycieli: ")
                 help_numbers_teachers = []
@@ -90,23 +123,91 @@ while True:
                     print("Należy wybrać numer nauczyciela.")
                     continue
                 teachers_objects[class_tutor_from_user - 1].is_class_tutor = True
+                # TODO usuń powyższe
 
                 print("Lista klas: ")
                 print(teachers_objects[class_tutor_from_user - 1].school_classes)
-                which_tutor_class_from_user = input(f"Wpisz klasę, której wychowawcą będzie "
-                                                    f"{teachers_objects[class_tutor_from_user - 1].first_name} "
-                                                    f"{teachers_objects[class_tutor_from_user - 1].last_name}: ")
-                if which_tutor_class_from_user not in teachers_objects[class_tutor_from_user - 1].school_classes:
+                tutor_class_of_from_user = input(f"Wpisz klasę, której wychowawcą będzie "
+                                                 f"{teachers_objects[class_tutor_from_user - 1].first_name} "
+                                                 f"{teachers_objects[class_tutor_from_user - 1].last_name}: ")
+                if tutor_class_of_from_user not in teachers_objects[class_tutor_from_user - 1].school_classes:
                     print("Należy wybrać klasę, którą uczy nauczyciel.")
+                    # TODO Zmień poniższe
                     teachers_objects[class_tutor_from_user - 1].is_class_tutor = False
                     continue
                 for teachers in teachers_objects:
-                    if which_tutor_class_from_user == teachers.which_class_tutor:
+                    if tutor_class_of_from_user == teachers.class_tutor_of:
                         print("Wybrana klasa ma już wychowawcę.")
                         break
 
-                teachers_objects[class_tutor_from_user - 1].which_class_tutor = which_tutor_class_from_user
+                teachers_objects[class_tutor_from_user - 1].class_tutor_of = tutor_class_of_from_user
 
                 print(f"Nauczycielowi {teachers_objects[class_tutor_from_user - 1].first_name} "
                       f"{teachers_objects[class_tutor_from_user - 1].last_name} nadano status wychowawcy klasy "
-                      f"{which_tutor_class_from_user}.")
+                      f"{tutor_class_of_from_user}.")
+
+            elif user_choice_create_menu == "koniec" or user_choice_create_menu == "4":
+                break
+
+            else:
+                print("Niepoprawne polecenie.")
+
+    elif user_choice_main_menu == "zarządzaj" or user_choice_main_menu == "2":
+        while True:
+            user_choice_display_menu = input("Wybierz opcję, którą chcesz wyświetlić:\n"
+                                             "1 - klasa\n"
+                                             "2 - uczeń\n"
+                                             "3 - nauczyciel\n"
+                                             "4 - wychowawca\n"
+                                             "5 - koniec\n")
+
+            if user_choice_display_menu == "klasa" or user_choice_display_menu == "1":
+                string_classes = str(list_of_school_classes).replace("'", "")
+                print(f"Lista klas do wyboru: {string_classes}")
+                display_school_class_from_user = input("Podaj klasę, której dane chcesz wyświetlić: ")
+                print(f"Uczniowie należący do klasy {display_school_class_from_user}:")
+                number_of_students_the_class = 0
+                for student in students_objects:
+                    if display_school_class_from_user == student.school_class:
+                        number_of_students_the_class += 1
+                        print(f"{number_of_students_the_class}. {student.first_name} {student.last_name}")
+
+                is_tutor_class = False
+                tutor_class_first_name = None
+                tutor_class_last_name = None
+                for teacher in teachers_objects:
+                    if display_school_class_from_user == teacher.class_tutor_of:
+                        is_tutor_class = True
+                        tutor_class_first_name = teacher.first_name
+                        tutor_class_last_name = teacher.last_name
+
+                if is_tutor_class:
+                    print(f"\nWychowawcą danej klasy jest {tutor_class_first_name} {tutor_class_last_name}.\n")
+                else:
+                    print(f"\nNie ma wychowawcy dla klasy {display_school_class_from_user} w danym spisie!\n")
+
+            elif user_choice_display_menu == "uczeń" or user_choice_display_menu == "2":
+
+                pass
+
+
+            elif user_choice_display_menu == "nauczyciel" or user_choice_display_menu == "3":
+                pass
+
+
+            elif user_choice_display_menu == "wychowawca" or user_choice_display_menu == "4":
+                pass
+
+
+            elif user_choice_display_menu == "koniec" or user_choice_display_menu == "5":
+                break
+
+            else:
+                print("Niepoprawne polecenie.")
+
+
+    elif user_choice_main_menu == "koniec" or user_choice_main_menu == "3":
+        break
+
+    else:
+        print("Niepoprawne polecenie.")
