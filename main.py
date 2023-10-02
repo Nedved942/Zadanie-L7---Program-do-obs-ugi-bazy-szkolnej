@@ -122,8 +122,17 @@ while True:
                 if class_tutor_from_user not in help_numbers_teachers:
                     print("Należy wybrać numer nauczyciela.")
                     continue
-                teachers_objects[class_tutor_from_user - 1].is_class_tutor = True
-                # TODO usuń powyższe
+
+                if teachers_objects[class_tutor_from_user - 1].class_tutor_of:
+                    print(f"Wybrany nauczyciel jest już wychowawcą klasy "
+                          f"{teachers_objects[class_tutor_from_user - 1].class_tutor_of}.")
+                    user_answer = input("Czy chcesz ją nadpisać? (y/n) ")
+                    if user_answer == "y":
+                        pass
+                    elif user_answer == "n":
+                        pass
+                    else:
+                        print("Niewłaściwe polecenie.")
 
                 print("Lista klas: ")
                 print(teachers_objects[class_tutor_from_user - 1].school_classes)
@@ -132,9 +141,6 @@ while True:
                                                  f"{teachers_objects[class_tutor_from_user - 1].last_name}: ")
                 if tutor_class_of_from_user not in teachers_objects[class_tutor_from_user - 1].school_classes:
                     print("Należy wybrać klasę, którą uczy nauczyciel.")
-                    # TODO Zmień poniższe
-                    teachers_objects[class_tutor_from_user - 1].is_class_tutor = False
-                    continue
                 for teachers in teachers_objects:
                     if tutor_class_of_from_user == teachers.class_tutor_of:
                         print("Wybrana klasa ma już wychowawcę.")
@@ -187,6 +193,14 @@ while True:
                     print(f"\nNie ma wychowawcy dla klasy {display_school_class_from_user} w danym spisie!\n")
 
             elif user_choice_display_menu == "uczeń" or user_choice_display_menu == "2":
+                help_numbers_students = []
+                print("Lista uczniów: ")
+                for index, student in enumerate(students_objects, start=1):
+                    print(f"{index}. {student.first_name} {student.last_name}")
+                    help_numbers_students.append(index)
+                display_student_from_user = input("Wybierz numer ucznia, którego dane chcesz wyświetlić: ")
+
+
 
                 pass
 
