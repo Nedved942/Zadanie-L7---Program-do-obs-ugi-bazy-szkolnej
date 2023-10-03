@@ -1,28 +1,9 @@
-# students_objects = []
-# teachers_objects = []
+from classes import Student, Teacher
 
 print("\n*** Witaj w programie do obsługi bazy szkolnej! ***")
 
-
-class Student:
-    def __init__(self, first_name, last_name, school_class):
-        print(f"Utworzono profil ucznia! {first_name} {last_name} z klasy {school_class}.")
-        self.first_name = first_name
-        self.last_name = last_name
-        self.school_class = school_class
-
-
-class Teacher:
-    def __init__(self, first_name, last_name, school_subject, school_classes, class_tutor_of=None):
-        print(f"Utworzono profil nauczyciela! {first_name} {last_name} uczy przedmiotu {school_subject}.")
-        print(f"Lista klas nauczyciela to: {school_classes}")
-        self.first_name = first_name
-        self.last_name = last_name
-        self.school_subject = school_subject
-        self.school_classes = school_classes
-        self.class_tutor_of = class_tutor_of
-
-
+# students_objects = []
+# teachers_objects = []
 # list_of_school_classes = []
 
 students_objects = [Student("Jan", "Kowalski", "1B"),
@@ -33,7 +14,6 @@ teachers_objects = [Teacher("Paweł", "Kozioł", "biologia", ["1B", "2B", "3B"],
                     Teacher("Benek", "Ben", "geografia", ["2B", "3B", "4B"])]
 
 list_of_school_classes = ["1B", "2B", "3B", "4B"]
-
 
 while True:
     user_choice_main_menu = input("Wpisz jedną z poniższych opcji:\n"
@@ -182,8 +162,8 @@ while True:
                 display_student_from_user = int(display_student_from_user)
                 for index, teacher in enumerate(teachers_objects):
                     if students_objects[display_student_from_user - 1].school_class in teacher.school_classes:
-                        print(
-                            f"{index + 1}. {str(teacher.school_subject).capitalize()} z {teacher.first_name} {teacher.last_name}")
+                        print(f"{index + 1}. {str(teacher.school_subject).capitalize()} z {teacher.first_name} "
+                              f"{teacher.last_name}")
                     else:
                         print("Nie ma zajęć danego ucznia w spisie.")
 
