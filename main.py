@@ -27,7 +27,7 @@ class Teacher:
 
 students_objects = [Student("Jan", "Kowalski", "1B"), Student("Marek", "Wójcik", "1B"), Student("Jan", "Kot", "2B")]
 teachers_objects = [Teacher("Paweł", "Kozioł", "biologia", ["1B", "2B", "3B"]), Teacher("Benek", "Ben", "geografia",
-                                                                                        ["3B", "4B"])]
+                                                                                        ["2B", "3B", "4B"])]
 list_of_school_classes = ["1B", "2B", "3B", "4B"]
 
 # data = {
@@ -199,13 +199,13 @@ while True:
                     print(f"{index}. {student.first_name} {student.last_name}")
                     help_numbers_students.append(index)
                 display_student_from_user = input("Wybierz numer ucznia, którego dane chcesz wyświetlić: ")
-
-
-
-                pass
-
+                display_student_from_user = int(display_student_from_user)
+                for index, teacher in enumerate(teachers_objects):
+                    if students_objects[display_student_from_user - 1].school_class in teacher.school_classes:
+                        print(f"{index + 1}. {str(teacher.school_subject).capitalize()} z {teacher.first_name} {teacher.last_name}")
 
             elif user_choice_display_menu == "nauczyciel" or user_choice_display_menu == "3":
+
                 pass
 
 
