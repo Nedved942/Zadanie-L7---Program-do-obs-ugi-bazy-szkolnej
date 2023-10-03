@@ -25,36 +25,15 @@ class Teacher:
 
 # list_of_school_classes = []
 
-students_objects = [Student("Jan", "Kowalski", "1B"), Student("Marek", "Wójcik", "1B"), Student("Jan", "Kot", "2B")]
-teachers_objects = [Teacher("Paweł", "Kozioł", "biologia", ["1B", "2B", "3B"]), Teacher("Benek", "Ben", "geografia",
-                                                                                        ["2B", "3B", "4B"])]
+students_objects = [Student("Jan", "Kowalski", "1B"),
+                    Student("Marek", "Wójcik", "1B"),
+                    Student("Jan", "Kot", "2B")]
+
+teachers_objects = [Teacher("Paweł", "Kozioł", "biologia", ["1B", "2B", "3B"], "2B"),
+                    Teacher("Benek", "Ben", "geografia", ["2B", "3B", "4B"])]
+
 list_of_school_classes = ["1B", "2B", "3B", "4B"]
 
-# data = {
-#     "Students":
-#     [
-#         {
-#             "first_name": "Paweł",
-#             "last_name": "Kozioł",
-#             "school_class": "1C"
-#         },
-#         {
-#             "first_name": "Ksawery",
-#             "last_name": "Kowalski",
-#             "school_class": "3C"
-#         }
-#     ],
-#     "Teachers":
-#     [
-#         {
-#             "first_name": "Jan",
-#             "last_name": "Wójtowicz",
-#             "school_subject": "biologia",
-#             "school_classes": ["1C", "2B", "2C"],
-#             "class_tutor_of": "1C"
-#         }
-#     ]
-# }
 
 while True:
     user_choice_main_menu = input("Wpisz jedną z poniższych opcji:\n"
@@ -171,12 +150,13 @@ while True:
                 string_classes = str(list_of_school_classes).replace("'", "")
                 print(f"Lista klas do wyboru: {string_classes}")
                 display_school_class_from_user = input("Podaj klasę, której dane chcesz wyświetlić: ")
-                print(f"Uczniowie należący do klasy {display_school_class_from_user}:")
                 number_of_students_the_class = 0
                 for student in students_objects:
                     if display_school_class_from_user == student.school_class:
                         number_of_students_the_class += 1
                         print(f"{number_of_students_the_class}. {student.first_name} {student.last_name}")
+                if number_of_students_the_class == 0:
+                    print("Nie ma żadnych uczniów w tej klasie w danym spisie.")
 
                 is_tutor_class = False
                 tutor_class_first_name = None
@@ -202,7 +182,8 @@ while True:
                 display_student_from_user = int(display_student_from_user)
                 for index, teacher in enumerate(teachers_objects):
                     if students_objects[display_student_from_user - 1].school_class in teacher.school_classes:
-                        print(f"{index + 1}. {str(teacher.school_subject).capitalize()} z {teacher.first_name} {teacher.last_name}")
+                        print(
+                            f"{index + 1}. {str(teacher.school_subject).capitalize()} z {teacher.first_name} {teacher.last_name}")
                     else:
                         print("Nie ma zajęć danego ucznia w spisie.")
 
@@ -220,15 +201,31 @@ while True:
                     print(f"Nie ma klas danego nauczyciela w spisie.")
 
             elif user_choice_display_menu == "wychowawca" or user_choice_display_menu == "4":
-                pass
+                help_numbers_tutors = []
+                print("Lista wychowawców: ")
+                for index, teacher in enumerate(teachers_objects, start=1):
+                    if teacher.class_tutor_of:
+                        print(f"{index}. {teacher.first_name} {teacher.last_name}")
+                        help_numbers_tutors.append(index)
 
+                if help_numbers_tutors:
+                    display_tutor_from_user = input("Wybierz numer wychowawcy, którego dane chcesz wyświetlić: ")
+                    display_tutor_from_user = int(display_tutor_from_user)
+                    students_of_tutor = 0
+                    for student in students_objects:
+                        if student.school_class in teachers_objects[display_tutor_from_user - 1].school_classes:
+                            print(f"{students_of_tutor + 1}. {student.first_name} {student.last_name}")
+                            students_of_tutor += 1
+                    if students_of_tutor == 0:
+                        print("Nie ma ucznia w danym spisie, którego prowadzi podany wychowawca.")
+                else:
+                    print(f"Nie ma wychowawcy w danym spisie.")
 
             elif user_choice_display_menu == "koniec" or user_choice_display_menu == "5":
                 break
 
             else:
                 print("Niepoprawne polecenie.")
-
 
     elif user_choice_main_menu == "koniec" or user_choice_main_menu == "3":
         break
