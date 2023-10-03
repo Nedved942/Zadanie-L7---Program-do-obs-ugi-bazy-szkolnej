@@ -1,0 +1,3 @@
+Czy lepiej by było te wszystkie funkcje jak dodawanie ucznia/nauczyciela lub nadawanie statusu wychowawcy zamknąć
+w klasie jako metody i później w programie po prostu je wywołać?
+

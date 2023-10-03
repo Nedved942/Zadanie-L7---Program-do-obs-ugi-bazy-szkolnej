@@ -36,7 +36,7 @@ Należy wpisać opcję, którą chcemy wybrać: klasa, uczen, nauczyciel, wychow
 Polecenie "klasa" - Należy pobrać klasę, którą chcemy wyświetlić (np. "3C") program ma wypisać wszystkich uczniów,
 którzy należą do tej klasy, a także wychowawcę tejże klasy.
 
-Polecenie "uczeń" - Należy pobrać imię i nazwisko uczenia, program ma wypisać wszystkie lekcje, które ma uczeń
+Polecenie "uczeń" - Należy pobrać imię i nazwisko ucznia, program ma wypisać wszystkie lekcje, które ma uczeń
 a także nauczycieli, którzy je prowadzą.
 
 Polecenie "nauczyciel" - Należy pobrać imię i nazwisko nauczyciela, program ma wypisać wszystkie klasy, które prowadzi
