@@ -203,11 +203,21 @@ while True:
                 for index, teacher in enumerate(teachers_objects):
                     if students_objects[display_student_from_user - 1].school_class in teacher.school_classes:
                         print(f"{index + 1}. {str(teacher.school_subject).capitalize()} z {teacher.first_name} {teacher.last_name}")
+                    else:
+                        print("Nie ma zajęć danego ucznia w spisie.")
 
             elif user_choice_display_menu == "nauczyciel" or user_choice_display_menu == "3":
-
-                pass
-
+                help_numbers_teachers = []
+                print("Lista nauczycieli: ")
+                for index, teacher in enumerate(teachers_objects, start=1):
+                    print(f"{index}. {teacher.first_name} {teacher.last_name}")
+                    help_numbers_teachers.append(index)
+                display_teacher_from_user = input("Wybierz numer nauczyciela, którego dane chcesz wyświetlić: ")
+                display_teacher_from_user = int(display_teacher_from_user)
+                if teachers_objects[display_teacher_from_user - 1].school_classes:
+                    print(f"Lista klas nauczyciela: {teachers_objects[display_teacher_from_user - 1].school_classes}")
+                else:
+                    print(f"Nie ma klas danego nauczyciela w spisie.")
 
             elif user_choice_display_menu == "wychowawca" or user_choice_display_menu == "4":
                 pass
