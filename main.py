@@ -77,7 +77,13 @@ while True:
                     print(f"{index} - {teachers.first_name} {teachers.last_name}")
                     help_numbers_teachers.append(index)
 
-                class_tutor_from_user = int(input("Wpisz numer nauczyciela, któremu chcesz nadać status wychowawcy: "))
+                class_tutor_from_user = input("Wpisz numer nauczyciela, któremu chcesz nadać status wychowawcy: ")
+                try:
+                    class_tutor_from_user = int(class_tutor_from_user)
+                except ValueError:
+                    print("Błąd - niepoprawna wartość!")
+                    continue
+
                 if class_tutor_from_user not in help_numbers_teachers:
                     print("Należy wybrać numer nauczyciela.")
                     continue
@@ -85,13 +91,14 @@ while True:
                 if teachers_objects[class_tutor_from_user - 1].class_tutor_of:
                     print(f"Wybrany nauczyciel jest już wychowawcą klasy "
                           f"{teachers_objects[class_tutor_from_user - 1].class_tutor_of}.")
-                    user_answer = input("Czy chcesz ją nadpisać? (y/n) ")
+                    user_answer = input("Czy chcesz zdjąć status wychowawcy? (y/n) ")
                     if user_answer == "y":
                         pass
                     elif user_answer == "n":
-                        pass
+                        continue
                     else:
                         print("Niewłaściwe polecenie.")
+                        continue
 
                 print("Lista klas: ")
                 print(teachers_objects[class_tutor_from_user - 1].school_classes)
@@ -100,16 +107,21 @@ while True:
                                                  f"{teachers_objects[class_tutor_from_user - 1].last_name}: ")
                 if tutor_class_of_from_user not in teachers_objects[class_tutor_from_user - 1].school_classes:
                     print("Należy wybrać klasę, którą uczy nauczyciel.")
+                    continue
+                is_class_has_tutor_already = False
                 for teachers in teachers_objects:
                     if tutor_class_of_from_user == teachers.class_tutor_of:
-                        print("Wybrana klasa ma już wychowawcę.")
+                        is_class_has_tutor_already = True
                         break
 
-                teachers_objects[class_tutor_from_user - 1].class_tutor_of = tutor_class_of_from_user
+                if is_class_has_tutor_already:
+                    print("Wybrana klasa ma już wychowawcę.")
+                else:
+                    teachers_objects[class_tutor_from_user - 1].class_tutor_of = tutor_class_of_from_user
 
-                print(f"Nauczycielowi {teachers_objects[class_tutor_from_user - 1].first_name} "
-                      f"{teachers_objects[class_tutor_from_user - 1].last_name} nadano status wychowawcy klasy "
-                      f"{tutor_class_of_from_user}.")
+                    print(f"Nauczycielowi {teachers_objects[class_tutor_from_user - 1].first_name} "
+                          f"{teachers_objects[class_tutor_from_user - 1].last_name} nadano status wychowawcy klasy "
+                          f"{tutor_class_of_from_user}.")
 
             elif user_choice_create_menu == "koniec" or user_choice_create_menu == "4":
                 break
@@ -130,6 +142,10 @@ while True:
                 string_classes = str(list_of_school_classes).replace("'", "")
                 print(f"Lista klas do wyboru: {string_classes}")
                 display_school_class_from_user = input("Podaj klasę, której dane chcesz wyświetlić: ")
+                if display_school_class_from_user not in list_of_school_classes:
+                    print("Podanej klasy nie ma w spisie.")
+                    continue
+
                 number_of_students_the_class = 0
                 for student in students_objects:
                     if display_school_class_from_user == student.school_class:
@@ -159,7 +175,15 @@ while True:
                     print(f"{index}. {student.first_name} {student.last_name}")
                     help_numbers_students.append(index)
                 display_student_from_user = input("Wybierz numer ucznia, którego dane chcesz wyświetlić: ")
-                display_student_from_user = int(display_student_from_user)
+                try:
+                    display_student_from_user = int(display_student_from_user)
+                except ValueError:
+                    print("Błąd - niepoprawna wartość!")
+                    continue
+                if display_student_from_user not in help_numbers_students:
+                    print("Niewłaściwa wartość.")
+                    continue
+
                 for index, teacher in enumerate(teachers_objects):
                     if students_objects[display_student_from_user - 1].school_class in teacher.school_classes:
                         print(f"{index + 1}. {str(teacher.school_subject).capitalize()} z {teacher.first_name} "
@@ -174,7 +198,15 @@ while True:
                     print(f"{index}. {teacher.first_name} {teacher.last_name}")
                     help_numbers_teachers.append(index)
                 display_teacher_from_user = input("Wybierz numer nauczyciela, którego dane chcesz wyświetlić: ")
-                display_teacher_from_user = int(display_teacher_from_user)
+                try:
+                    display_teacher_from_user = int(display_teacher_from_user)
+                except ValueError:
+                    print("Błąd - niepoprawna wartość!")
+                    continue
+                if display_teacher_from_user not in help_numbers_teachers:
+                    print("Niewłaściwa wartość.")
+                    continue
+
                 if teachers_objects[display_teacher_from_user - 1].school_classes:
                     print(f"Lista klas nauczyciela: {teachers_objects[display_teacher_from_user - 1].school_classes}")
                 else:
@@ -190,7 +222,14 @@ while True:
 
                 if help_numbers_tutors:
                     display_tutor_from_user = input("Wybierz numer wychowawcy, którego dane chcesz wyświetlić: ")
-                    display_tutor_from_user = int(display_tutor_from_user)
+                    try:
+                        display_tutor_from_user = int(display_tutor_from_user)
+                    except ValueError:
+                        print("Błąd - niepoprawna wartość!")
+                        continue
+                    if display_tutor_from_user not in help_numbers_tutors:
+                        print("Niewłaściwa wartość.")
+                        continue
                     students_of_tutor = 0
                     for student in students_objects:
                         if student.school_class in teachers_objects[display_tutor_from_user - 1].school_classes:
